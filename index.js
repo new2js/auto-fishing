@@ -1014,7 +1014,7 @@ module.exports = function autoFishing(mod) {
 		if (config.contdist < 0)
 			config.contdist = 6;
 		if (config.blacklist === undefined)
-			config.blacklist = [];
+			config.blacklist = ITEMS_FISHES_BAFS;
 		if (config.gmmode === undefined)
 			config.gmmode = 'stop';
 	}
