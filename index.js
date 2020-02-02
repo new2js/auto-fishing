@@ -1035,6 +1035,85 @@ module.exports = function autoFishing(mod) {
 	}
 	//endregion
 
+	function blacklistAddFrom(srcList) {
+		// for element in list, if not in blacklist, add to blacklist
+		for (const fishId of srcList) {
+			blacklistAdd(fishId);
+		}
+	}
+
+	function blacklistRemoveFrom(srcList) {
+		// for element in list, if in blacklist, remove from blacklist
+		for (const fishId of srcList) {
+			blacklistRemove(fishId);
+		}
+	}
+
+	function blacklistAdd(itemId) {
+		if (config.blacklist.indexOf(itemId) == -1) {
+			mod.command.message(`Pushed item id to blacklist: ${itemId}`);
+			config.blacklist.push(itemId);
+		} else {
+			mod.command.message(`Already exist`);
+		}
+	}
+
+	function blacklistRemove(itemId) {
+		var index = config.blacklist.indexOf(itemId);
+		if (index == -1) {
+			mod.command.message(`not exist`);
+		} else {
+			mod.command.message(`Remove item id from blacklist: ${itemId}`);
+			config.blacklist.splice(index, 1);
+		}
+	}
+
+	function getFishTier(fishId) {
+		if (ITEMS_FISHES_T0S.indexOf(fishId) != -1) {
+			return 0;
+		}
+		else if (ITEMS_FISHES_T1S.indexOf(fishId) != -1) {
+			return 1;
+		}
+		else if (ITEMS_FISHES_T2S.indexOf(fishId) != -1) {
+			return 2;
+		}
+		else if (ITEMS_FISHES_T3S.indexOf(fishId) != -1) {
+			return 3;
+		}
+		else if (ITEMS_FISHES_T4S.indexOf(fishId) != -1) {
+			return 4;
+		}
+		else if (ITEMS_FISHES_T5S.indexOf(fishId) != -1) {
+			return 5;
+		}
+		else if (ITEMS_FISHES_T6S.indexOf(fishId) != -1) {
+			return 6;
+		}
+		else if (ITEMS_FISHES_T7S.indexOf(fishId) != -1) {
+			return 7;
+		}
+		else if (ITEMS_FISHES_T8S.indexOf(fishId) != -1) {
+			return 8;
+		}
+		else if (ITEMS_FISHES_T9S.indexOf(fishId) != -1) {
+			return 9;
+		}
+		else if (ITEMS_FISHES_T10S.indexOf(fishId) != -1) {
+			return 10;
+		}
+		else {
+			return 11;
+		}
+	}
+
+	function blacklistShow() {
+		for (const fishId of config.blacklist) {
+			var tier = getFishTier(fishId);
+			mod.command.message(`${fishId}, T${tier}`);
+		}
+	}
+
 	//region Command
 	mod.command.add('fish', (key, arg, arg2) => {
 		switch (key) {
@@ -1043,29 +1122,127 @@ module.exports = function autoFishing(mod) {
 					case 'add':
 						var tmp = getItemIdChatLink(arg2);
 						if (tmp != null) {
-							if (config.blacklist.indexOf(tmp) == -1) {
-								mod.command.message(`Pushed item id to blacklist: ${tmp}`);
-								config.blacklist.push(tmp);
-							} else {
-								mod.command.message(`Already exist`);
-							}
+							blacklistAdd(tmp);
 						} else {
-							mod.command.message(`Incorrect item id`);
+							switch (arg2) {
+								case 'T0':
+									// add T0's to blacklist
+									blacklistAddFrom(ITEMS_FISHES_T0S);
+									break;
+								case 'T1':
+									// add T1's to blacklist
+									blacklistAddFrom(ITEMS_FISHES_T1S);
+									break;
+								case 'T2':
+									// add T2's to blacklist
+									blacklistAddFrom(ITEMS_FISHES_T2S);
+									break;
+								case 'T3':
+									// add T3's to blacklist
+									blacklistAddFrom(ITEMS_FISHES_T3S);
+									break;
+								case 'T4':
+									// add T4's to blacklist
+									blacklistAddFrom(ITEMS_FISHES_T4S);
+									break;
+								case 'T5':
+									// add T5's to blacklist
+									blacklistAddFrom(ITEMS_FISHES_T5S);
+									break;
+								case 'T6':
+									// add T6's to blacklist
+									blacklistAddFrom(ITEMS_FISHES_T6S);
+									break;
+								case 'T7':
+									// add T7's to blacklist
+									blacklistAddFrom(ITEMS_FISHES_T7S);
+									break;
+								case 'T8':
+									// add T8's to blacklist
+									blacklistAddFrom(ITEMS_FISHES_T8S);
+									break;
+								case 'T9':
+									// add T9's to blacklist
+									blacklistAddFrom(ITEMS_FISHES_T9S);
+									break;
+								case 'T10':
+									// add T10's to blacklist
+									blacklistAddFrom(ITEMS_FISHES_T10S);
+									break;
+								case 'T11':
+								case 'BAF':
+									// add T11's to blacklist
+									blacklistAddFrom(ITEMS_FISHES_BAFS);
+									break;
+								default:
+									mod.command.message(`Incorrect item id`);
+									break;
+							}
 						}
 						break;
 					case 'remove':
 						var tmp = getItemIdChatLink(arg2);
 						if (tmp != null) {
-							var index = config.blacklist.indexOf(tmp);
-							if (index == -1) {
-								mod.command.message(`not exist`);
-							} else {
-								mod.command.message(`Remove item id from blacklist: ${tmp}`);
-								config.blacklist.splice(index, 1);
-							}
+							blacklistRemove(tmp);
 						} else {
-							mod.command.message(`Incorrect item id`);
+							switch (arg2) {
+								case 'T0':
+									// add T0's to blacklist
+									blacklistRemoveFrom(ITEMS_FISHES_T0S);
+									break;
+								case 'T1':
+									// add T1's to blacklist
+									blacklistRemoveFrom(ITEMS_FISHES_T1S);
+									break;
+								case 'T2':
+									// add T2's to blacklist
+									blacklistRemoveFrom(ITEMS_FISHES_T2S);
+									break;
+								case 'T3':
+									// add T3's to blacklist
+									blacklistRemoveFrom(ITEMS_FISHES_T3S);
+									break;
+								case 'T4':
+									// add T4's to blacklist
+									blacklistRemoveFrom(ITEMS_FISHES_T4S);
+									break;
+								case 'T5':
+									// add T5's to blacklist
+									blacklistRemoveFrom(ITEMS_FISHES_T5S);
+									break;
+								case 'T6':
+									// add T6's to blacklist
+									blacklistRemoveFrom(ITEMS_FISHES_T6S);
+									break;
+								case 'T7':
+									// add T7's to blacklist
+									blacklistRemoveFrom(ITEMS_FISHES_T7S);
+									break;
+								case 'T8':
+									// add T8's to blacklist
+									blacklistRemoveFrom(ITEMS_FISHES_T8S);
+									break;
+								case 'T9':
+									// add T9's to blacklist
+									blacklistRemoveFrom(ITEMS_FISHES_T9S);
+									break;
+								case 'T10':
+									// add T10's to blacklist
+									blacklistRemoveFrom(ITEMS_FISHES_T10S);
+									break;
+								case 'T11':
+								case 'BAF':
+									// add T11's to blacklist
+									blacklistRemoveFrom(ITEMS_FISHES_BAFS);
+									break;
+								default:
+									mod.command.message(`Incorrect item id`);
+									break;
+							}
 						}
+						break;
+					case 'show':
+						blacklistShow();
 						break;
 					case 'reset':
 						config.blacklist = [];
