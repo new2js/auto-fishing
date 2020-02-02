@@ -4,16 +4,16 @@
 
 ## What this changes
 This is a fork to add some enhancements to SoliaRdi's auto-fishing. It adds some features that I have wanted from this module and Lambda11's let-me-fish module, as well as new features that neither has. Here's the list of current and future changes:
-[x] Automatically include BAFs on blacklist.
-[x] Add and remove fish by tier
-[x] Show blacklist contents with labelling
-[ ] Auto-negotiate support
-[ ] Blacklist override if there's no space left
-[ ] Auto sell to merchant on command
-[ ] Auto dismantle on command
-[ ] Print current settings
-[ ] Tier based rod time delay
-[ ] Toolbox console notifications for when to sell
+- [x] Automatically include BAFs on blacklist.
+- [x] Add and remove fish by tier
+- [x] Show blacklist contents with labelling
+- [ ] Auto-negotiate support
+- [ ] Blacklist override if there's no space left
+- [ ] Auto sell to merchant on command
+- [ ] Auto dismantle on command
+- [ ] Print current settings
+- [ ] Tier based rod time delay
+- [ ] Toolbox console notifications for when to sell
 
 ---
 
