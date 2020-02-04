@@ -1114,6 +1114,59 @@ module.exports = function autoFishing(mod) {
 		}
 	}
 
+	function showSettings() {
+		mod.command.message(`Current settings:`);
+
+		// filetmode prints
+		switch (config.filetmode) {
+			case 'bank':
+				mod.command.message(`filet mode: Set to bank ${config.bankAmount} filets after filling inventory`);
+				break;
+			case 'selltonpc':
+				mod.command.message(`filet mode: Sell to npc within ${config.contdist}m instead using scrolls enabled.`);
+				break;
+			case 'sellscroll':
+				mod.command.message(`filet mode: Sell to npc with npc scrolls.`);
+				break;
+			default:
+				mod.command.message(`filet mode: disabled`);
+				break;
+		}
+
+		// recipe
+		if (config.recipe != null) {
+			mod.command.message(`Crafting: Recipe id set to: ${config.recipe}`);
+		}
+		else {
+			mod.command.message(`Crafting: Recipe id not set`);
+		}
+
+		// fish salad state
+		mod.command.message('Auto use of fish salad is ' + (config.autosalad ? 'en' : 'dis') + 'abled.');
+
+		// gm detection action
+		mod.command.message(`Gm detected mode set to ${config.gmmode}`);
+		if (config.gmmode) {
+			switch (config.gmmode) {
+				case 'exit':
+					mod.command.message(`if Gm spawns nearby, will exit game`);
+					break;
+				case 'lobby':
+					mod.command.message(`if Gm spawns nearby, will exit to lobby`);
+					break;
+				case 'stop':
+					mod.command.message(`if Gm spawns nearby, will stay in game but stop fishing`);
+					break;
+			}
+		}
+
+		// skip baf mode
+		mod.command.message('Skip BAF mode is ' + (config.skipbaf ? 'en' : 'dis') + 'abled.');
+
+		// debug mode
+		mod.command.message('Debug mode is ' + (DEBUG ? 'en' : 'dis') + 'abled.');
+	}
+
 	//region Command
 	mod.command.add('fish', (key, arg, arg2) => {
 		switch (key) {
@@ -1320,6 +1373,9 @@ module.exports = function autoFishing(mod) {
 				mod.command.message('Configuration has been saved.');
 				saveConfig(settingsPath, config);
 				break;
+			case 'settings':
+				showSettings();
+				break;
 			case 'reloadconf':
 				getConfigData(settingsPath);
 				mod.command.message('Configuration has been reloaded.');
@@ -1353,6 +1409,7 @@ module.exports = function autoFishing(mod) {
 					}
 					toggleHooks();
 					if (enabled) {
+						showSettings();
 						statistic = [], startTime = null, endTime = null, lastLevel = null;
 					}
 				}

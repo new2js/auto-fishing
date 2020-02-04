@@ -11,7 +11,7 @@ This is a fork to add some enhancements to SoliaRdi's auto-fishing. It adds some
 - [ ] Blacklist override if there's no space left
 - [ ] Auto sell to merchant on command
 - [ ] Auto dismantle on command
-- [ ] Print current settings
+- [x] Print current settings
 - [ ] Tier based rod time delay
 - [ ] Toolbox console notifications for when to sell
 
@@ -34,6 +34,7 @@ You can edit the delays in the YourName-ServerID.json file via notepad once you 
 | /8 fish blacklist show | Prints out the item IDs of the fish in the blacklist as well as the tier of those fish. | Added for easier blacklist usage when farming for the daily turn-in. |
 | /8 fish blacklist reset | Reset your current blacklist. | In case you want to remove everything. |
 | /8 fish setrecipe | The last used recipe will be used for auto crafting. | You can click on the "create" button in the craft window while your rod is cast. It won't craft anything but it will set the last-recipe that is used by this command. |
+| /8 fish settings | The current settings for the mod will be printed, except for the blacklist. | The settins will also print when you enable the mod. |
 | /8 fish selltonpc `range` | Sell fishes when your inventory is full to fishing merchant. | Maximum range between you and the npc is 6 meters. Will ignore the blacklisted fish. |
 | /8 fish filetmode bank `value` | Set the value to bank fish filets after filling your inventory. | Value range is 500 - 10000. You need at least one banker scroll in vip panel or inventory. Will ignore the blacklisted fish. |
 | /8 fish filetmode | Disable any interactions with filets. | Useful for switching different modes. |
