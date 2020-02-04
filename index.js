@@ -77,7 +77,10 @@ module.exports = function autoFishing(mod) {
 		endSellingTimer = null,
 		lastRecipe = null,
 		sellItemsCount = 0,
-		idleCheckTimer = null;
+		idleCheckTimer = null,
+		hasNego = mod.manager.isLoaded('auto-nego'),
+		pendingDeals = [],
+		negoWaiting = false;
 	let DEBUG = false;
 	let hooks = [];
 
@@ -159,6 +162,9 @@ module.exports = function autoFishing(mod) {
 				hook('C_CAST_FISHING_ROD', 2, cCastFishingRod);
 				hook('C_STOP_FISHING', 2, cStopFishing);
 			}
+			
+			hook('S_TRADE_BROKER_DEAL_SUGGESTED', 1, sTradeBrokerDealSuggested);
+
 		} else {
 			for (var i = 0; i < hooks.length; i++) {
 				mod.unhook(hooks[i]);
@@ -172,6 +178,34 @@ module.exports = function autoFishing(mod) {
 	};
 
 	//region Hooks
+
+	// mod is turned on
+	// not waiting for initial messages and settings
+	// has auto negotiate
+	// is not waiting on negotiations
+	// and offered price is the same as seller price
+	function sTradeBrokerDealSuggested(event) {
+		console.log("got S_TRADE_BROKER_DEAL_SUGGESTED, starting with " + pendingDeals.length + " deals");
+
+		if (hasNego && !negoWaiting && event.offeredPrice === event.sellerPrice)
+		{
+			console.log('- checking if we have a nego already for this item');
+			for(let i = 0; i < pendingDeals.length; i++)
+            {
+                let deal = pendingDeals[i];
+                if(deal.playerId == event.playerId && deal.listing == event.listing)
+                {
+					console.log('- found the same nego, so we are going to replace it');
+                    pendingDeals.splice(i--, 1);
+                }
+            }
+            // with any potential duplicates taken out, we add in the new deal
+			pendingDeals.push(event);
+			var dealLen = pendingDeals.length;
+			mod.command.message("Nego deal was suggested. Addressing " + dealLen + (dealLen > 1 ? " deals" : " deal") + " before the next cast...")
+            return false;
+		}
+	}
 
 	function cCastFishingRod(event){
 		event.counter=1;
@@ -301,6 +335,31 @@ module.exports = function autoFishing(mod) {
 			mod.setTimeout(() => {
 				makeDecision();
 			}, rng(config.time.rod));
+		}
+
+		 // all out of deals and still waiting?
+        // if we were waiting on deal negotites to finish (negoWaiting)
+        // and ther are no more pending deals
+        // and the system message is a mediate success sell
+		else if (message.id == 'SMT_MEDIATE_SUCCESS_SELL') {
+			var dealLen = pendingDeals.length;
+			console.log("cleared a deal, have " + dealLen + (dealLen > 1 ? " deals" : " deal") + " left");
+
+			if (negoWaiting && !pendingDeals.length) {
+				console.log('All negotiations finished... resuming fishing from original timeout');
+				// mod.setTimeout(() => {
+				// 	makeDecision();
+				// }, rng(config.time.decision) + 5000);
+			}
+		}
+
+		// we want to throw the rod but still trading?
+		else if (message.id == 'SMT_CANNOT_USE_ITEM_WHILE_CONTRACT') {
+			negoWaiting = true;
+			console.log('Negotiations are taking long time to finish... lets wait a bit more + 10s delay')
+			// mod.setTimeout(() => {
+			// 	makeDecision();
+			// }, rng(config.time.decision) + 10000);
 		}
 	}
 
@@ -693,6 +752,14 @@ module.exports = function autoFishing(mod) {
 				break;
 			}
 			case "userod": {
+				if (pendingDeals.length) {
+					mod.command.message("going to check on deals instead of casting rod now");
+					console.log("have " + pendingDeals.length + " deals, going to negotiate");
+					action = 'negotiate';
+					break;
+				}
+
+				negoWaiting = false;
 				let rod = mod.game.inventory.findInBagOrPockets(flatSingle(ITEMS_RODS));
 				request = {
 					rod: rod
@@ -798,6 +865,20 @@ module.exports = function autoFishing(mod) {
 			case "aborted": {
 				toggleHooks();
 				break;
+			}
+			case "negotiate": {
+				mod.command.message("Lets address suggested deals and give it 30s...");
+        		//console.log("nego start wait");
+        
+				for(let i = 0; i < pendingDeals.length; i++)
+				{
+					mod.toClient('S_TRADE_BROKER_DEAL_SUGGESTED', 1, pendingDeals[i]);
+					pendingDeals.splice(i--, 1);
+				}
+				negoWaiting = true;
+				mod.setTimeout(() => {
+					makeDecision();
+				}, rng(config.time.decision) + 30000);
 			}
 		}
 	}
@@ -1401,6 +1482,7 @@ module.exports = function autoFishing(mod) {
 				if (key !== undefined) {
 					mod.command.message('Incorrect command');
 				} else {
+					hasNego = mod.manager.isLoaded('auto-nego');
 					if (config.filetmode == 'selltonpc') {
 						let npc = findClosestNpc();
 						if (npc === undefined || npc.distance === undefined || npc.distance > config.contdist * 25) {

@@ -3,7 +3,7 @@ This is a fork to add some enhancements to SoliaRdi's auto-fishing. It adds some
 - [x] Automatically include BAFs on blacklist.
 - [x] Add and remove fish by tier
 - [x] Show blacklist contents with tier labelling
-- [ ] Auto-negotiate support
+- [x] Auto-negotiate support (in testing)
 - [ ] Blacklist override if there's no space left
 - [ ] Auto sell to merchant on command
 - [ ] Auto dismantle on command
