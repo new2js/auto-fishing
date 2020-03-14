@@ -1,7 +1,12 @@
 {
     "files": {
-        "index.js": "0fbac0cf816f753c89bbe15b2b9961d95ee67b7de53bf43857a7c97f973c3b44",
-        "module.json": "4711bfedcbd5ec6923c1822b7e30f653ee842bce0b9b2ea8e7333cf8f24e4db8"
+        "index.js": "e2da976ea90131e7a31e2514edfc8e8fcca3b6062d260143139569a83b867f5d",
+        "module.json": "23b2336942f1d657bd218ec5106af1925111b47f7505e3aaf9a0aa56281e52a7",
+        "node_modules/moment/LICENSE": "8f38f320bbf5eb84c08e08676f7ee1d2204ebe5797f6a090d077329cf212fca3",
+        "node_modules/moment/README.md": "0ea28c66cadbe27b34a8a33629c03e73b07a7874b344842ca5daf850011a4791",
+        "node_modules/moment/moment.js": "abb1e3869d7c4b972c050c0fb07165fb3ab9ca2e2613d4644d92c29e54c24122",
+        "node_modules/moment/package.js": "6334f70497c6d8fd22adb3089eec30bf1e2b3dacf92508df52eaa7a8aee12bba",
+        "node_modules/moment/package.json": "3081147ac38aca42735baede069a3d97cc567e8f0e1f001c35453768897d9207"
     },
     "defs": {
         "C_CANCEL_CONTRACT": 1,

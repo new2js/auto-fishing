@@ -3,8 +3,9 @@
 ---
 
 ## First Time Installation & Updating Opcodes
-- Move the files inside the defs folder into Your-Proxy-Folder/node_modules/tera-data/protocol.
-- Move or merge the protocol files into Your-Proxy-Folder/node_modules/tera-data/map.
+- Opcodes only here https://github.com/tera-proxy/tera-data/tree/master/map.
+- Move the files inside the defs folder into Your-Proxy-Folder/data/definitions.
+- Move or merge the protocol file (from link above for your region) into Your-Proxy-Folder/data/opcodes.
 
 ---
 
@@ -41,7 +42,6 @@ You can edit the delays in the YourName-ServerID.json file via notepad once you 
 
 - If you need to log them yourself use this module for logging specific packets [Packet ID Finder](https://github.com/Owyn/alex-packet-id-finder).
 - If you need to log them yourself use this module for logging all client or server packets [Packets Logger](https://github.com/SoliaRdi/PacketsLogger).
-- Maybe you will find opcodes here https://github.com/tera-proxy/tera-data/tree/master/map.
 
 ---
 

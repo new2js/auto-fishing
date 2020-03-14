@@ -1,14 +1,14 @@
 {
     "disableAutoUpdate": false,
-    "author": "SoliaRdi",
+    "author": "new2js",
     "options": {
-        "niceName": "Auto-Fishing",
-        "guiName": "Auto-Fishing"
+        "niceName": "Auto-Fishing-mod",
+        "guiName": "Auto-Fishing-modified"
     },
-    "supportUrl": "https://github.com/SoliaRdi/auto-fishing",
-    "servers": ["https://raw.githubusercontent.com/SoliaRdi/auto-fishing/master/"],
-    "name": "auto-fishing",
-    "description": "Fish easier!",
+    "supportUrl": "https://github.com/new2js/auto-fishing",
+    "servers": ["https://raw.githubusercontent.com/new2js/auto-fishing/master/"],
+    "name": "auto-fishing-modified",
+    "description": "SoliaRdi auto-fishing with added features!",
     "packets": {
         "C_CANCEL_CONTRACT": 1,
         "C_DIALOG": 1,
