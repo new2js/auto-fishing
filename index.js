@@ -625,6 +625,17 @@ module.exports = function autoFishing(mod) {
 		request = {};
 		let filets = mod.game.inventory.findInBagOrPockets(FILET_ID);
 		let fishes = mod.game.inventory.findAllInBagOrPockets(flatSingle(ITEMS_FISHES)).filter(f => !config.blacklist.includes(f.id));
+		// blacklist override option if there's no fish available
+		if (config.overrideBlacklist) {
+			if (fishes.length == 0) {
+				fishes = mod.game.inventory.findAllInBagOrPockets(flatSingle(ITEMS_FISHES));
+				fishes = fishes.slice(Math.max(fishes.length - 5, 0));
+				console.log(`auto-fishing(${mod.game.me.name})|NOTICE: Used blacklist override to get ${fishes.length} inventory slots.`)
+				if (DEBUG) {
+					mod.command.message(`Used blacklist override to get ${fishes.length} inventory slots`);
+				}
+			}
+		}
 		let bait = mod.game.inventory.findInBagOrPockets(Object.values(BAITS));
 		let salad = mod.game.inventory.findInBagOrPockets(ITEMS_SALAD);
 		if (config.autosalad) {
@@ -1099,6 +1110,8 @@ module.exports = function autoFishing(mod) {
 			config.blacklist = ITEMS_FISHES_BAFS;
 		if (config.gmmode === undefined)
 			config.gmmode = 'stop';
+		if (config.overrideBlacklist == undefined)
+			config.overrideBlacklist = false;
 	}
 
 	function rng(f, s) {
@@ -1194,6 +1207,7 @@ module.exports = function autoFishing(mod) {
 			var tier = getFishTier(fishId);
 			mod.command.message(`${fishId}, T${tier}`);
 		}
+		mod.command.message('Blacklist override is ' + (config.overrideBlacklist ? 'on.' : 'off.'));
 	}
 
 	function showSettings() {
@@ -1244,6 +1258,9 @@ module.exports = function autoFishing(mod) {
 
 		// skip baf mode
 		mod.command.message('Skip BAF mode is ' + (config.skipbaf ? 'en' : 'dis') + 'abled.');
+
+		// blacklist notes (use blacklist show for detailed list)
+		mod.command.message(`Blacklist has ${config.blacklist.length} items and override is ` + (config.overrideBlacklist ? 'on' : 'off'));
 
 		// debug mode
 		mod.command.message('Debug mode is ' + (DEBUG ? 'en' : 'dis') + 'abled.');
@@ -1382,6 +1399,10 @@ module.exports = function autoFishing(mod) {
 					case 'reset':
 						config.blacklist = [];
 						mod.command.message(`Blacklist reset`);
+						break;
+					case 'override':
+						config.overrideBlacklist = !config.overrideBlacklist;
+						mod.command.message('Blacklist override has been ' + (config.overrideBlacklist ? 'en' : 'dis') + 'abled.');
 						break;
 				}
 				break;

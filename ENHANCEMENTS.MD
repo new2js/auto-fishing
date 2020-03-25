@@ -4,7 +4,7 @@ This is a fork to add some enhancements to SoliaRdi's auto-fishing. It adds some
 - [x] Add and remove fish by tier
 - [x] Show blacklist contents with tier labelling
 - [x] Auto-negotiate support (in testing)
-- [ ] Blacklist override if there's no space left
+- [x] Blacklist override if there's no space left
 - [ ] Auto sell to merchant on command
 - [ ] Auto dismantle on command
 - [x] Print current settings
@@ -29,6 +29,7 @@ You can edit the delays in the YourName-ServerID.json file via notepad once you 
 | /8 fish blacklist remove `STRING` | Remove the desired fish group from the blacklist. | The available groups are T1, T2, ... T11, BAF. Example usage: `/8 fish blacklist remove T8`. Use these to add fish groups without requring one from your inventory. |
 | /8 fish blacklist show | Prints out the item IDs of the fish in the blacklist as well as the tier of those fish. | Added for easier blacklist usage when farming for the daily turn-in. |
 | /8 fish blacklist reset | Reset your current blacklist. | In case you want to remove everything. |
+| /8 fish blacklist override | Toggles blacklist override on or off. | If you run out of space for fish due to your blacklist, this option will ignore the blacklist and get rid of 5 fish using your filet-mode to make space to continue fishing. |
 | /8 fish setrecipe | The last used recipe will be used for auto crafting. | You can click on the "create" button in the craft window while your rod is cast. It won't craft anything but it will set the last-recipe and then you can use `fish setrecipe`. |
 | /8 fish settings | The current settings for the mod will be printed, except for the blacklist. | The settins will also print each time you enable the mod. |
 | /8 fish selltonpc `range` | Sell fishes when your inventory is full to fishing merchant. | Maximum range between you and the npc is 6 meters. Will ignore the blacklisted fish. |
