@@ -6,7 +6,7 @@
         "guiName": "Auto-Fishing-modified"
     },
     "supportUrl": "https://github.com/new2js/auto-fishing",
-    "servers": ["https://raw.githubusercontent.com/new2js/auto-fishing/master/"],
+    "servers": ["https://raw.githubusercontent.com/new2js/auto-fishing/enhancements/"],
     "name": "auto-fishing-modified",
     "description": "SoliaRdi auto-fishing with added features!",
     "packets": {
