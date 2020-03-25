@@ -1273,6 +1273,45 @@ module.exports = function autoFishing(mod) {
 		mod.command.message('Debug mode is ' + (DEBUG ? 'en' : 'dis') + 'abled.');
 	}
 
+	function userCmdSellToNpc() {
+		mod.clearTimeout(idleCheckTimer);
+        idleCheckTimer = mod.setTimeout(() => {
+            makeDecision();
+        }, 300 * 1000);
+
+        request = {};
+
+        let fishes = mod.game.inventory.findAllInBagOrPockets(flatSingle(ITEMS_FISHES)).filter(f => !config.blacklist.includes(f.id));
+        // blacklist override option if there's no fish available
+        if (config.overrideBlacklist) {
+            if (fishes.length == 0) {
+                fishes = mod.game.inventory.findAllInBagOrPockets(flatSingle(ITEMS_FISHES));
+                fishes = fishes.slice(Math.max(fishes.length - 5, 0));
+                console.log(`auto-fishing(${mod.game.me.name})|NOTICE: Used blacklist override to get ${fishes.length} inventory slots.`)
+                if (DEBUG) {
+                    mod.command.message(`Used blacklist override to get ${fishes.length} inventory slots`);
+                }
+            }
+		}
+		
+		let action = 'selltonpc';
+
+		let npc = findClosestNpc();
+		if (npc === undefined || npc.distance === undefined || npc.distance > config.contdist * 25) {
+			mod.command.message('ERROR: No seller npc found at the acceptable range.');
+			console.log(`auto-fishing(${mod.game.me.name})|ERROR: No seller npc found at the acceptable range.`);
+			action = 'aborted';
+		} else {
+			request = {
+				seller: npc,
+				fishes: fishes
+			};
+		}
+
+        request.action = action;
+        processDecision();
+	}
+
 	//region Command
 	mod.command.add('fish', (key, arg, arg2) => {
 		switch (key) {
@@ -1465,6 +1504,16 @@ module.exports = function autoFishing(mod) {
 				let npc = findClosestNpc();
 				if (npc === undefined || npc.distance === undefined || npc.distance > config.contdist * 25) {
 					mod.command.message('Warning: no seller npc at acceptable range');
+				}
+				break;
+			case 'selltonpcnow':
+				mod.command.message(`Selling to an NPC (if in range) right now.`);
+				let npc2 = findClosestNpc();
+				if (npc2 === undefined || npc2.distance === undefined || npc2.distance > config.contdist * 25) {
+					mod.command.message('Warning: no seller npc at acceptable range');
+				}
+				else {
+					userCmdSellToNpc();
 				}
 				break;
 			case 'autosalad':

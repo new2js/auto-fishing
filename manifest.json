@@ -1,10 +1,10 @@
 {
     "files": {
-        "index.js": "3ecc6c5edcec29df57ac7c5ec731f2e0930bee39e7d105f4caa70e9c63090f69",
+        "index.js": "8960f9ca46f765a3b8b80d2b22b5b14fa91d7bb99ad2edf308d4b1ffe18ef8cb",
         "module.json": "0c801c9bce3432112baf12c928f8b7658c508a4f5c6a29efb4a77a9fce27e6de",
         "node_modules/moment/LICENSE": "8f38f320bbf5eb84c08e08676f7ee1d2204ebe5797f6a090d077329cf212fca3",
         "node_modules/moment/README.md": "4d7e1e040c286696ab7e6afee65530390fe3f0e206657f14c0d384bd438dccf9",
-        "node_modules/moment/ENHANCEMENTS.MD.md": "ec3e38a2caf7e1322c912991f35e8e085a26f02986ded2bac1cb565aea9dd522",
+        "node_modules/moment/ENHANCEMENTS.MD.md": "080f2a8f6db2d1bc67654c0c71ed0e0d704602a7873bbcbb374f0132ecd993a4",
         "node_modules/moment/moment.js": "abb1e3869d7c4b972c050c0fb07165fb3ab9ca2e2613d4644d92c29e54c24122",
         "node_modules/moment/package.js": "6334f70497c6d8fd22adb3089eec30bf1e2b3dacf92508df52eaa7a8aee12bba",
         "node_modules/moment/package.json": "3081147ac38aca42735baede069a3d97cc567e8f0e1f001c35453768897d9207"

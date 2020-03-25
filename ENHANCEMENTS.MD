@@ -5,7 +5,7 @@ This is a fork to add some enhancements to SoliaRdi's auto-fishing. It adds some
 - [x] Show blacklist contents with tier labelling
 - [x] Auto-negotiate support (in testing)
 - [x] Blacklist override if there's no space left
-- [ ] Auto sell to merchant on command
+- [~] Auto sell to merchant on command (requires mod to be on and will try to continue fishing after sale).
 - [ ] Auto dismantle on command
 - [x] Print current settings
 - [ ] Tier based rod time delay mode
@@ -33,6 +33,7 @@ You can edit the delays in the YourName-ServerID.json file via notepad once you 
 | /8 fish setrecipe | The last used recipe will be used for auto crafting. | You can click on the "create" button in the craft window while your rod is cast. It won't craft anything but it will set the last-recipe and then you can use `fish setrecipe`. |
 | /8 fish settings | The current settings for the mod will be printed, except for the blacklist. | The settins will also print each time you enable the mod. |
 | /8 fish selltonpc `range` | Sell fishes when your inventory is full to fishing merchant. | Maximum range between you and the npc is 6 meters. Will ignore the blacklisted fish. |
+| /8 fish selltonpcnow | Sell fishes when your inventory to a merchant. | Uses the distance set by normal selltonpc configuration. Requires the mod to be active in order to catch the NPC window opening. Will also sell blacklisted fish if you have blacklist override turned on. |
 | /8 fish filetmode bank `value` | Set the value to bank fish filets after filling your inventory. | Value range is 500 - 10000. You need at least one banker scroll in vip panel or inventory. Will ignore the blacklisted fish. |
 | /8 fish filetmode | Disable any interactions with filets. | Useful for switching different modes. Use this if you want to make filets. |
 | /8 fish sellscroll | Sell fishes when your inventory is full. | You need traveling merchant scroll in your inventory and additional opcodes & defs. |
