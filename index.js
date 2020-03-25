@@ -186,17 +186,17 @@ module.exports = function autoFishing(mod) {
 	// is not waiting on negotiations
 	// and offered price is the same as seller price
 	function sTradeBrokerDealSuggested(event) {
-		console.log("got S_TRADE_BROKER_DEAL_SUGGESTED, starting with " + pendingDeals.length + " deals");
+		console.log(`auto-fishing(${mod.game.me.name})| got S_TRADE_BROKER_DEAL_SUGGESTED, ${pendingDeals.length} current pending deals.`)
 
 		if (hasNego && !negoWaiting && event.offeredPrice === event.sellerPrice)
 		{
-			console.log('- checking if we have a nego already for this item');
+			// console.log('- checking if we have a nego already for this item');
 			for(let i = 0; i < pendingDeals.length; i++)
             {
                 let deal = pendingDeals[i];
                 if(deal.playerId == event.playerId && deal.listing == event.listing)
                 {
-					console.log('- found the same nego, so we are going to replace it');
+					// console.log('- found the same nego, so we are going to replace it');
                     pendingDeals.splice(i--, 1);
                 }
             }
@@ -344,10 +344,15 @@ module.exports = function autoFishing(mod) {
         // and the system message is a mediate success sell
 		else if (message.id == 'SMT_MEDIATE_SUCCESS_SELL') {
 			var dealLen = pendingDeals.length;
-			console.log("cleared a deal, have " + dealLen + (dealLen > 1 ? " deals" : " deal") + " left");
+			console.log(`auto-fishing(${mod.game.me.name})|NOTICE: cleared a deal, have ${dealLen} left`);
+			if (DEBUG) {
+				mod.command.message(`Cleared a deal, have ${dealLen} left`);
+			}
 
 			if (negoWaiting && !pendingDeals.length) {
-				console.log('All negotiations finished... resuming fishing from original timeout');
+				if (DEBUG) {
+					mod.command.message('All negotiations finished... resuming fishing from original timeout');
+				}
 				// mod.setTimeout(() => {
 				// 	makeDecision();
 				// }, rng(config.time.decision) + 5000);
@@ -357,7 +362,7 @@ module.exports = function autoFishing(mod) {
 		// we want to throw the rod but still trading?
 		else if (message.id == 'SMT_CANNOT_USE_ITEM_WHILE_CONTRACT') {
 			negoWaiting = true;
-			console.log('Negotiations are taking long time to finish... lets wait a bit more + 10s delay')
+			// console.log('Negotiations are taking long time to finish... lets wait a bit more + 10s delay')
 			// mod.setTimeout(() => {
 			// 	makeDecision();
 			// }, rng(config.time.decision) + 10000);
@@ -765,8 +770,10 @@ module.exports = function autoFishing(mod) {
 			}
 			case "userod": {
 				if (pendingDeals.length) {
-					mod.command.message("going to check on deals instead of casting rod now");
-					console.log("have " + pendingDeals.length + " deals, going to negotiate");
+					if (DEBUG) {
+						mod.command.message("going to check on deals instead of casting rod now");
+					}
+					console.log(`auto-fishing(${mod.game.me.name}|NOTICE: have ${pendingDeals.length} deals, going to negotiate`);
 					action = 'negotiate';
 					break;
 				}
